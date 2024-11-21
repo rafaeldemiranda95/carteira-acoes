@@ -7,7 +7,6 @@
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <base href="https://whale-app-9ytsq.ondigitalocean.app/">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
