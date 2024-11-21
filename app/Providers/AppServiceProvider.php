@@ -8,6 +8,7 @@ use App\Repositories\StockRepository;
 use App\Interfaces\Repositories\StockRepositoryInterface;
 use App\Interfaces\Services\StockServiceInterface;
 use App\Services\StockService;
+use URL;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(StockRepositoryInterface::class, StockRepository::class);
         $this->app->bind(StockServiceInterface::class, StockService::class);
+
+        if ($this->app->environment('prod')) {
+            URL::forceScheme('https');
+        }
     }
 
     /**
