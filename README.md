@@ -1,12 +1,3 @@
-<!-- npm run build
-php artisan migrate
-php artisan view:clear
-php artisan config:clear
-php artisan config:cache
-php artisan route:cache
-php artisan config:cache -->
-
-
 # Carteira de Ações
 
 **Carteira de Ações** é uma aplicação desenvolvida em Laravel para monitoramento de ações e dividendos. A aplicação integra-se à API **BRAPI** para fornecer informações em tempo real sobre o mercado financeiro, além de enviar alertas de compra e venda por e-mail com base em critérios configurados pelo usuário.
@@ -38,10 +29,3 @@ Antes de iniciar o projeto, certifique-se de ter as seguintes ferramentas instal
 - Node.js >= 16.x
 - MySQL ou PostgreSQL
 - Servidor web (Apache, Nginx ou built-in do Laravel)
-
-## Configuração do Ambiente
-
-1. Clone este repositório:
-   ```bash
-   git clone https://github.com/seuusuario/carteira-de-acoes.git
-   cd carteira-de-acoes
