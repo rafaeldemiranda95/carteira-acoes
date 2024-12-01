@@ -8,6 +8,9 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use DB;
 use App\Models\Dividend;
+use Spatie\Async\Pool;
+use Throwable;
+
 
 class StockService implements StockServiceInterface
 {
@@ -34,9 +37,10 @@ class StockService implements StockServiceInterface
 
         $this->token = env('BRAPI_API_TOKEN', '');
     }
+ 
+
     public function getStocksFromApi(): array
     {
-
         set_time_limit(0); 
         
         $url = 'quote/list';
@@ -51,14 +55,26 @@ class StockService implements StockServiceInterface
             $response = $response->wait(); 
 
             $data = json_decode($response->getBody(), true);
-            
+
             if (isset($data['stocks']) && is_array($data['stocks'])) {
-                
-                $this->saveStocks($data['stocks']); 
-                
-                foreach($data['stocks'] as $key => $stock){
-                    $this->getStockInformations($stock['stock']);
+                $this->saveStocks($data['stocks']);
+
+                // Inicializando o Pool para rodar as tarefas em paralelo
+                $pool = Pool::create();
+
+                foreach ($data['stocks'] as $stock) {
+                    echo "Processando ação: {$stock['stock']}\n";
+                    $pool->add(function () use ($stock) {
+                        // Executa a lógica em paralelo para cada ação
+                        $this->getStockInformations($stock['stock']);
+                    })->catch(function (Throwable $exception) {
+                        // Trate exceções para evitar que o pool falhe por completo
+                        echo "Erro ao processar ação: {$exception->getMessage()}\n";
+                    });
                 }
+
+                // Aguarda todas as tarefas terminarem
+                $pool->wait();
 
                 return $data['stocks'];
             }
@@ -68,6 +84,7 @@ class StockService implements StockServiceInterface
             return [];
         }
     }
+
 
     private function saveStocks(array $stocks): void
     {

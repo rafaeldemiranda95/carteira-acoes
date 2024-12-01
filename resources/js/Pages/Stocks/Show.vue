@@ -156,10 +156,6 @@ const dividends = page.props.dividends as Dividend[];
                                         disponível.</td>
                                 </tr>
 
-                                <tr v-if="!dividends.length">
-                                    <td class="px-4 py-2 text-sm text-gray-500 text-center" colspan="2">Nenhum dividendo
-                                        disponível.</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
