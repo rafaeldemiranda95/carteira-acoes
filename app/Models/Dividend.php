@@ -11,15 +11,8 @@ class Dividend extends Model
 
     protected $fillable = [
         'stock_id',
-        'asset_issued',
-        'payment_date',
-        'rate',
-        'related_to',
-        'approved_on',
-        'isin_code',
-        'label',
-        'last_date_prior',
-        'remarks',
+        'date',
+        'value',
     ];
 
     public function stock()

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\Services\StockServiceInterface;
 use App\Models\Stock;
+use App\Models\Dividend;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -45,7 +46,13 @@ class StockController extends Controller
      */
     public function show(Stock $stock)
     {
-        return Inertia::render('Stocks/Show', ['stock' => $stock]);
+        $this->stockService->getStockInformations($stock->symbol);
+        $dividends = Dividend::where('stock_id', $stock->id)->orderBy('date', 'desc')->get();
+    
+        return Inertia::render('Stocks/Show', [
+            'stock' => $stock,
+            'dividends' => $dividends,
+        ]);
     }
 
     /**
@@ -75,6 +82,6 @@ class StockController extends Controller
     public function fetchAndSaveStocks()
     {
         $stocks = $this->stockService->getStocksFromApi();
-        return response()->json($stocks);
+        return response()->json(data: $stocks);
     }
 }

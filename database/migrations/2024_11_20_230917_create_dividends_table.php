@@ -13,16 +13,9 @@ return new class extends Migration
     {
         Schema::create('dividends', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('stock_id')->constrained()->cascadeOnDelete(); // Relacionamento com Stock
-            $table->string('asset_issued');
-            $table->date('payment_date');
-            $table->decimal('rate', 10, 4);
-            $table->string('related_to')->nullable();
-            $table->date('approved_on')->nullable();
-            $table->string('isin_code')->nullable();
-            $table->string('label')->nullable();
-            $table->date('last_date_prior')->nullable();
-            $table->text('remarks')->nullable();
+            $table->foreignId('stock_id')->constrained()->onDelete('cascade'); // Relacionamento com a tabela `stocks`
+            $table->date('date'); // Data do dividendo
+            $table->decimal('value', 10, 4); // Valor do dividendo
             $table->timestamps();
         });
     }
