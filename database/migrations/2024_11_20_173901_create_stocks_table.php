@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('fifty_two_week_range')->nullable(); // Faixa de 52 semanas
             $table->float('fifty_two_week_low', 10, 2)->nullable(); // Mínimo de 52 semanas
             $table->float('fifty_two_week_high', 10, 2)->nullable(); // Máximo de 52 semanas
-            $table->timestamps(); // Created_at e Updated_at
+            $table->timestamps();
         });
     }
 

@@ -3,6 +3,11 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 
 // Tipar os dados se estiver usando TypeScript
+interface Dividend {
+    date: string;
+    value: number;
+}
+
 interface Stock {
     id: number;
     symbol: string;
@@ -33,6 +38,7 @@ interface Stock {
 import { usePage } from '@inertiajs/vue3';
 const page = usePage();
 const stock = page.props.stock as Stock;
+const dividends = page.props.dividends as Dividend[];
 </script>
 
 <template>
@@ -124,6 +130,34 @@ const stock = page.props.stock as Stock;
                                 <p class="text-lg font-bold text-gray-900">{{ stock.eps?.toFixed(2) || 'N/A' }}</p>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Calendário de Dividendos -->
+                    <div class="p-6 space-y-4">
+                        <h3 class="text-lg font-semibold">Calendário de Dividendos</h3>
+                        <table class="min-w-full bg-white border border-gray-200 rounded-md">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Data</th>
+                                    <th class="px-4 py-2 text-right text-sm font-medium text-gray-600">Valor (R$)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="dividend in dividends" :key="dividend.date">
+                                    <td class="px-4 py-2 text-sm text-gray-700">{{ new
+                                        Date(dividend.date).toLocaleDateString()
+                                        }}</td>
+                                    <td class="px-4 py-2 text-right text-sm text-gray-700">R$ {{ Number(dividend.value
+                                        ||
+                                        0).toFixed(2) }}</td>
+                                </tr>
+                                <tr v-if="!dividends.length">
+                                    <td class="px-4 py-2 text-sm text-gray-500 text-center" colspan="2">Nenhum dividendo
+                                        disponível.</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

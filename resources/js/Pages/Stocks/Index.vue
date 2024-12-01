@@ -57,7 +57,8 @@ const stocks = page.props.stocks as Stock[];
                                         <strong>Fechamento:</strong>
                                     </p>
                                     <p class="text-lg font-semibold text-gray-800">
-                                        R$ {{ stock.close.toFixed(2) }}
+                                        R$ {{ stock.close ? stock.close.toFixed(2) : 'N/A' }}
+
                                     </p>
                                 </div>
                                 <div class="flex items-center justify-between">
@@ -68,7 +69,9 @@ const stocks = page.props.stocks as Stock[];
                                         'text-green-500': stock.change > 0,
                                         'text-red-500': stock.change < 0,
                                     }" class="text-lg font-semibold">
-                                        {{ stock.change.toFixed(2) }}%
+                                        {{ stock.change !== null && stock.change !== undefined ? stock.change.toFixed(2)
+                                            : 'N/A'
+                                        }}%
                                     </p>
                                 </div>
                                 <div class="flex items-center justify-between">

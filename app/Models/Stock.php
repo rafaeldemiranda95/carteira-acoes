@@ -34,4 +34,9 @@ class Stock extends Model
         'market_cap', 
         'description', 
     ];
+
+    public function dividends()
+    {
+        return $this->hasMany(Dividend::class);
+    }
 }
